@@ -1,0 +1,35 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ReportViewer</title>
+</head>
+<body>
+    @{Html.BeginForm("RenderReport", "Home" , new { reporte = ViewBag.Reporte } , FormMethod.Post, new { id = "form", target="_blank" });}
+                <input name="parametros" type="hidden" id="parametros" />
+          @{Html.EndForm();}
+    @if (ViewBag.Parametros != null)
+    {
+    <div> @Html.Raw(ViewBag.Parametros) </div>
+    <div>
+        <button id="render" type="button" name="render"> Ver Reporte </button>
+    </div>
+    <hr/>
+    } else
+    {
+          <div style="max-width:184.6mm;margin:auto;border:1px outset #656565;padding:2.54cm;">
+            @Html.Raw(ViewBag.DataHTML)
+             </div>
+    }
+
+  
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/InitialScript.js"></script>
+</body>
+</html>

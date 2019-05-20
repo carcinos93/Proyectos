@@ -1,0 +1,12 @@
+<Report>
+	<DataSource>Data Source=CLINDEV17;Initial Catalog=CLIN; User Id =sa; Password=P@ssw0rd</DataSource>
+	<Params>
+		<Param name="NUMERO_SOLICITUD" type="textbox" label="Numero solicitud" dbtype="String" size="60">NUMERO_SOLICIUD</Param>
+		<Param name="FECHA" type="date" label="Numero solicitud" dbtype="datetime" >FECHA</Param>
+	</Params>
+	<DataSets>
+		<DataSet IsMultiRecords="0" name="DATOS" Type="STORE_PROCEDURE">
+			CF.R_PAGARE
+		</DataSet>
+	</DataSets>
+</Report>
