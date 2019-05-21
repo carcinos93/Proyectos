@@ -17,6 +17,8 @@ namespace ReportesCLIN2
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Dapper.SqlMapper.AddTypeHandler(typeof(Dictionary<int, object>), new JsonObjectTypeHandler());
+
+            
         }
     }
 }

@@ -1,0 +1,16 @@
+<Report>
+	<DataSource>Data Source=CLINDEV17;Initial Catalog=CLIN; User Id =sa; Password=P@ssw0rd</DataSource>
+	<Params>
+    <Param name="CREDITO" type="textbox" label="Credito" dbtype="varchar"/>
+		<Param name="FECHA" type="date" label="Fecha" dbtype="date"/>
+	</Params>
+	<DataSets>
+		<DataSet IsMultiRecords="1" name="dato" type="SQL">
+      <SQL>select PAGO_TOTAL as monto,MOVIMIENTO as movimiento,FECHA_MOVIMIENTO as fecha from CF.MOVIMIENTOS WHERE CREDITO = @CREDITO AND CONVERT(DATE,FECHA_MOVIMIENTO) = @FECHA</SQL>
+      <Parameters>
+        <Param type="varchar" name="CREDITO" />
+        <Param type="datetime" name="FECHA" />
+      </Parameters>
+		</DataSet>
+	</DataSets>
+</Report>

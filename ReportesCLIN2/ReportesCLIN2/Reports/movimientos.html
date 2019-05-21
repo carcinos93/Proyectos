@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+    <br/>
+    <br/>
+    <hr />
+        <table border="1" style="border-collapse: collapse; width:100%">
+            <tr>
+                <td>movimiento</td>
+                <td>fecha</td>
+                <td>monto</td>
+            </tr>
+            {%  for ds in dato %}
+               <tr>
+                   <td>{{ ds.movimiento }}</td>
+                   <td> {{ ds.fecha | format : " dd 'de' MMMM 'de' yyyy " }} </td>
+                   <td> {{ ds.monto | format : "c" }} </td>
+               </tr>
+            {% endfor %}
+        </table>
+</body>
+</html>

@@ -155,6 +155,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\Controls.cs" />
+    <Compile Include="Reports\Filters.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -166,10 +167,14 @@
     <Content Include="Content\Site.css" />
     <Content Include="log4net.Ext.Json.LICENSE.txt" />
     <Content Include="log4net.Ext.Json.README.txt" />
+    <Content Include="Reports\movimientos.html" />
     <Content Include="Reports\pagare.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Reports\pagare.data" />
+    <Content Include="Reports\movimientos.data">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
