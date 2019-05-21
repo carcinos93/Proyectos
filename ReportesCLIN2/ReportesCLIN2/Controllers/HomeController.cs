@@ -1,11 +1,12 @@
 ﻿using DotLiquid;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
-
+using Dapper;
 namespace ReportesCLIN2.Controllers
 {
     public class HomeController : Controller
@@ -18,6 +19,9 @@ namespace ReportesCLIN2.Controllers
         public ActionResult RenderReport(string reporte)
         {
             string parametros = Request.Params["parametros"];
+            
+            var obj_parametros = Newtonsoft.Json.JsonConvert.DeserializeObject(parametros, typeof(Dictionary<string, object>));
+            
             ViewBag.Reporte = reporte;
             if (string.IsNullOrWhiteSpace(reporte))
                 return View("NotFound");
@@ -27,15 +31,29 @@ namespace ReportesCLIN2.Controllers
 
             string texto = System.IO.File.ReadAllText(Server.MapPath("~/Reports/" + reporte + ".html"));
 
-            DotLiquid.Template template = DotLiquid.Template.Parse(texto);
-            string html = template.Render(Hash.FromAnonymousObject(new
+            var xml = XDocument.Load(Server.MapPath("~/Reports/" + reporte + ".data"));
+            Dictionary<string, object> objeto = new Dictionary<string, object>();
+            if (xml != null)
             {
-                deudor = "Nelson Alfonso Rodas Villalta",
-                dui = "04754407-4",
-                title = reporte,
-                user = new { name = "nrodas" },
-                products = new object[] { new { name = "Meet", price = 1999.00, fecha = DateTime.Now }, new { name = "Cheese", price = 1.45, fecha = DateTime.Now } }
-            }));
+                XNamespace ns = xml.Root.GetDefaultNamespace();
+                var x = xml.Descendants().Where(q => q.Name.LocalName == "DataSets").FirstOrDefault();
+                x.Elements().ToList().ForEach((e) => {
+                    bool IsMultiRecords = e.Attribute("IsMultiRecords") == null ? e.Attribute("IsMultiRecords").Value == "1" : false;
+                    string Type = e.Attribute("Type") == null ? "SQL" : e.Attribute("Type").Value;
+                    string SQL = e.Element(e.GetDefaultNamespace() + "SQL").Value;
+                    using (var conn = DbFactory.Conn())
+                    {
+                        conn.Open();
+
+                        var datos = conn.Query(SQL, obj_parametros).ToList()[0];
+                        objeto.Add("dato", datos);
+                    }
+
+                        int test = 0;
+                });
+            }
+            DotLiquid.Template template = DotLiquid.Template.Parse(texto);
+            string html = template.Render(Hash.FromDictionary(objeto));
 
             ViewBag.DataHTML = html;
 
