@@ -11,7 +11,7 @@
     <title>ReportViewer</title>
 </head>
 <body>
-    @{Html.BeginForm("RenderReport", "Home" , new { reporte = ViewBag.Reporte } , FormMethod.Post, new { id = "form", target="_blank" });}
+    @{Html.BeginForm("ExportReport", "Home" , new { reporte = ViewBag.Reporte } , FormMethod.Get, new { id = "form", target="_blank" });}
                 <input name="parametros" type="hidden" id="parametros" />
           @{Html.EndForm();}
     @if (ViewBag.Parametros != null)

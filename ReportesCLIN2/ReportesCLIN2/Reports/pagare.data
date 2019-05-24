@@ -6,7 +6,7 @@
 	</Params>
 	<DataSets>
 		<DataSet IsMultiRecords="0" name="dato" type="SQL">
-      <SQL>SELECT NOMBRE_COMPLETO AS deudor, DOCUMENTO_UNICO as dui, DIRECCION as direccion, FORMAT(FECHA_NACIMIENTO, 'dd') as dia FROM FA.CLIENTE WHERE CODIGO_CLIENTE = @CODIGO_CLIENTE</SQL>
+      <SQL>SELECT NOMBRE_COMPLETO AS deudor, DOCUMENTO_UNICO as dui, DIRECCION as direccion, FORMAT(FECHA_NACIMIENTO, 'dd') as dia, edad FROM FA.CLIENTE WHERE CODIGO_CLIENTE = @CODIGO_CLIENTE</SQL>
       <Parameters>
         <Param type="varchar" name="CODIGO_CLIENTE" />
       </Parameters>
