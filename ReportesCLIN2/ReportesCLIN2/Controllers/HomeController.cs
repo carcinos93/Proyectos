@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Xml.Linq;
 using Dapper;
 using System.Dynamic;
+using System.Collections.Specialized;
 
 namespace ReportesCLIN2.Controllers
 {
@@ -21,30 +22,55 @@ namespace ReportesCLIN2.Controllers
         {
                 return View("NotFound");
         }
+
+
+
         public FileResult ExportReport(string reporte, string parametros)
         {
+            string formato = Request.Params["formato"];
+            Reporting.RenderFormat formatoExport;
+            if (formato.ToLower() == "pdf")
+                formatoExport = Reporting.RenderFormat.PDF;
+            else
+                formatoExport = Reporting.RenderFormat.WORD;
+
+
+            string extension = (formatoExport == Reporting.RenderFormat.PDF ? "pdf" : "docx");
+
             if (!Reporting.ExistsReport(reporte))
                 this.RedirectToAction("NotFound");
 
 
 
-            return File(Reporting.Export(reporte, parametros, Reporting.RenderFormat.PDF), "application/octet-stream", reporte + ".pdf");
+            return File(Reporting.Export(reporte, parametros, formatoExport), "application/octet-stream", reporte + "." + extension);
 
         }
 
-        [HttpPost]
+        
         public ActionResult RenderReport(string reporte)
         {
-
-           string parametros = Request.Params["parametros"];
-            ViewBag.Reporte = reporte;
+            string parametros;
+            if (Request.Params["parametros"] == null)
+            {
+                Dictionary<string, object> p = new Dictionary<string, object>();
+          
+                    foreach (string i in Request.QueryString.AllKeys)
+                    {
+                        p.Add(i, Request.QueryString.Get(i));
+                    }
+                
+                parametros = Newtonsoft.Json.JsonConvert.SerializeObject( p );
+            }
+               
+            else
+                parametros = Request.Params["parametros"];
             if (!Reporting.ExistsReport(reporte))
                 return NotFound();
 
 
             ViewBag.DataHTML = Reporting.Render(reporte, parametros);
 
-            return View("ReportViewer");
+            return View("RenderViewer");
         }
         [HttpGet()]
         public ActionResult ViewReport(string reporte)

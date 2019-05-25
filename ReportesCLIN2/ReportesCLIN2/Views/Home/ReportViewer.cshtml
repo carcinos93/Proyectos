@@ -9,27 +9,37 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>ReportViewer</title>
+        <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
+    <div class="container">       <div class="row" style="width:100px">
     @{Html.BeginForm("ExportReport", "Home" , new { reporte = ViewBag.Reporte } , FormMethod.Get, new { id = "form", target="_blank" });}
                 <input name="parametros" type="hidden" id="parametros" />
+                <select  name="formato" class="form-control">
+                    <option value="pdf">PDF</option>
+                    <option value="word">WORD</option>
+                </select>
           @{Html.EndForm();}
+           </div>
     @if (ViewBag.Parametros != null)
     {
-    <div> @Html.Raw(ViewBag.Parametros) </div>
+    <div class="row" style="width: 400px"> @Html.Raw(ViewBag.Parametros) </div>
     <div>
-        <button id="render" type="button" name="render"> Ver Reporte </button>
+        <button class="btn btn-default" id="render" type="button" name="render"> Ver Reporte </button>
     </div>
     <hr/>
-    } else
-    {
-          <div style="max-width:184.6mm;margin:auto;border:1px outset #656565;padding:2.54cm;">
-            @Html.Raw(ViewBag.DataHTML)
-             </div>
-    }
+    } 
+    </div>
 
+            <iframe id="renderReport" width="100%" height="auto"></iframe>
   
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script>
+        window['url_base'] = "/Home/RenderReport/@ViewBag.Reporte";
+    </script>
     <script src="~/Scripts/InitialScript.js"></script>
+
 </body>
 </html>
