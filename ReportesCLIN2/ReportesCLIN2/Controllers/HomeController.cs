@@ -27,6 +27,22 @@ namespace ReportesCLIN2.Controllers
 
         public FileResult ExportReport(string reporte, string parametros)
         {
+            string param;
+            if (Request.Params["parametros"] == null)
+            {
+                Dictionary<string, object> p = new Dictionary<string, object>();
+
+                foreach (string i in Request.QueryString.AllKeys)
+                {
+                    p.Add(i, Request.QueryString.Get(i));
+                }
+
+                param = Newtonsoft.Json.JsonConvert.SerializeObject(p);
+            }
+
+            else
+                param = Request.Params["parametros"];
+
             string formato = Request.Params["formato"];
             Reporting.RenderFormat formatoExport;
             if (formato.ToLower() == "pdf")
@@ -42,7 +58,7 @@ namespace ReportesCLIN2.Controllers
 
 
 
-            return File(Reporting.Export(reporte, parametros, formatoExport), "application/octet-stream", reporte + "." + extension);
+            return File(Reporting.Export(reporte, param, formatoExport), "application/octet-stream", reporte + "." + extension);
 
         }
 
@@ -64,6 +80,7 @@ namespace ReportesCLIN2.Controllers
                
             else
                 parametros = Request.Params["parametros"];
+
             if (!Reporting.ExistsReport(reporte))
                 return NotFound();
 

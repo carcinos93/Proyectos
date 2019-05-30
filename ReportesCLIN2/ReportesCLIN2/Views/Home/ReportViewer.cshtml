@@ -9,32 +9,44 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>ReportViewer</title>
-        <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
 
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="container">       <div class="row" style="width:100px">
-    @{Html.BeginForm("ExportReport", "Home" , new { reporte = ViewBag.Reporte } , FormMethod.Get, new { id = "form", target="_blank" });}
-                <input name="parametros" type="hidden" id="parametros" />
-                <select  name="formato" class="form-control">
-                    <option value="pdf">PDF</option>
-                    <option value="word">WORD</option>
-                </select>
-          @{Html.EndForm();}
-           </div>
-    @if (ViewBag.Parametros != null)
-    {
-    <div class="row" style="width: 400px"> @Html.Raw(ViewBag.Parametros) </div>
-    <div>
-        <button class="btn btn-default" id="render" type="button" name="render"> Ver Reporte </button>
-    </div>
-    <hr/>
-    } 
-    </div>
 
-            <iframe id="renderReport" width="100%" height="auto"></iframe>
-  
+        <div class="container" style="width:100%;position: fixed; z-index:0; background: #ffffff; border-bottom:1px solid #000000" >
+            <div class="row" style="width:500px">
+                <div class="col-md-7">
+                    @if (ViewBag.Parametros != null)
+                    {
+                        <div> @Html.Raw(ViewBag.Parametros) </div>
+                    }
+                </div>
+                <div class="col-md-5">
+                    @{Html.BeginForm("ExportReport", "Home", new { reporte = ViewBag.Reporte }, FormMethod.Get, new { id = "form", target = "_blank" });}
+                    <div class="form-group">
+                        <label></label>
+                        <select name="formato" class="form-control">
+                            <option value="pdf">PDF</option>
+                            <option value="word">WORD</option>
+                        </select>
+                        <input name="parametros" type="hidden" id="parametros" />
+                    </div>
+                    @{Html.EndForm();}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-default" id="render" type="button" name="render"> Ver Reporte </button>
+                </div>
+
+            </div>
+        </div>
+
+
+    <iframe scrolling="no" style="margin-top:125px; z-index:-99999" onload="resizeIframe(this)" id="renderReport" width="100%" height="auto"></iframe>
+
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script>
         window['url_base'] = "/Home/RenderReport/@ViewBag.Reporte";

@@ -187,17 +187,15 @@ namespace ReportesCLIN2
     public class DbFactory
     {
         private static ILog log = LogManager.GetLogger(typeof(DbFactory));
-        public static IDbConnection Conn()
+        public static IDbConnection Conn(string conn)
         {
             
-            var connectionString = @"server=CLINDEV17;database={0};uid={1};password={2};";
+            var connectionString = conn;
             HttpContext context = HttpContext.Current;
-            var usuario = "sa";
-            var empresa = "CLIN";
-            var password = "P@ssw0rd";
+
            
             var connection = new SqlConnection(
-                string.Format(connectionString, empresa, usuario, password)
+                connectionString
                 );
             return connection;
         }

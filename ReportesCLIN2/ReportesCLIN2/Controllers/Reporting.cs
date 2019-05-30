@@ -88,8 +88,8 @@ namespace ReportesCLIN2.Controllers
 
                 config.PageSize = PdfSharp.PageSize.A4;
                 config.MarginBottom = 60;
-                config.MarginLeft = 30;
-                config.MarginRight = 30;
+                config.MarginLeft = 60;
+                config.MarginRight = 60;
                 config.MarginTop = 60;
               
                 PdfDocument pdf = TheArtOfDev.HtmlRenderer.PdfSharp.PdfGenerator.GeneratePdf(html, config );
@@ -120,13 +120,16 @@ namespace ReportesCLIN2.Controllers
             {
                 XNamespace ns = xml.Root.GetDefaultNamespace();
                 var x = xml.Descendants().Where(q => q.Name.LocalName == "DataSets").FirstOrDefault();
+                string strconn = xml.Descendants().Where(q => q.Name.LocalName == "DataSource").FirstOrDefault().Value;
                 x.Elements().ToList().ForEach((e) =>
                 {
                     bool IsMultiRecords = e.Attribute("IsMultiRecords") != null ? e.Attribute("IsMultiRecords").Value == "1" : false;
-                    string Type = e.Attribute("type") == null ? "SQL" : e.Attribute("type").Value;
+                    string Type = e.Attribute("type") == null ? "query" : e.Attribute("type").Value;
                     string Name = e.Attribute("name").Value;
                     string SQL = e.Element(e.GetDefaultNamespace() + "SQL").Value;
-                    using (var conn = DbFactory.Conn())
+                   
+                    System.Data.CommandType commandType = Type == "query" ? System.Data.CommandType.Text : System.Data.CommandType.StoredProcedure;
+                    using (var conn = DbFactory.Conn(strconn))
                     {
                         conn.Open();
 
@@ -142,7 +145,7 @@ namespace ReportesCLIN2.Controllers
                         if (IsMultiRecords)
                         {
                             List<object> datos = new List<object>();
-                            conn.Query(SQL, parameters).ToList().ForEach((f) =>
+                            conn.Query(sql: SQL, param: parameters, commandType: commandType).ToList().ForEach((f) =>
                             {
                                 datos.Add(DapperHelpers.ToExpandoObject(f));
                             });
@@ -151,7 +154,7 @@ namespace ReportesCLIN2.Controllers
 
                         else
                         {
-                            var firstOrDefault = conn.Query(SQL, parameters).FirstOrDefault();
+                            var firstOrDefault = conn.Query(sql: SQL, param: parameters, commandType: commandType).FirstOrDefault();
                             objeto.Add(Name, firstOrDefault);
                         }
                     }

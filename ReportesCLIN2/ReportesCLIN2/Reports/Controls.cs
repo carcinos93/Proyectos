@@ -14,12 +14,12 @@ namespace ReportesCLIN2.Reports
         }
         public void AddDate(dynamic Properties)
         {
-            string control = @"<b>{1}</b>&nbsp;<input class='param form-control' type='date' name='{0}'/>";
+            string control = @"<div class='form-group'><label>{1}</label>&nbsp;<input class='param form-control' type='date' name='{0}'/></div>";
             this.resultado.Add(string.Format(control, Properties.name, Properties.label));
         }
         public void AddTextBox(dynamic Properties)
         {
-            string control = @"<b>{1}</b>&nbsp;<input class='param form-control' type='textbox' name='{0}'/>";
+            string control = @"<div class='form-group'><label>{1}</label>&nbsp;<input class='param form-control' type='textbox' name='{0}'/></div>";
             this.resultado.Add(string.Format(control, Properties.name, Properties.label));
         }
 

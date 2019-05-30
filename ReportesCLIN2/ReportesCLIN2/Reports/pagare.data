@@ -1,14 +1,13 @@
 <Report>
-	<DataSource>Data Source=CLINDEV17;Initial Catalog=CLIN; User Id =sa; Password=P@ssw0rd</DataSource>
+	<DataSource>server=10.0.0.13;database=PRUEBAS;uid=sa;password=P@ssw0rd;</DataSource>
 	<Params>
-		<Param name="CODIGO_CLIENTE" type="textbox" label="Codigo cliente" dbtype="String" size="60"/>
-
+		<Param name="CREDITO" type="textbox" label="CREDITO" dbtype="String" size="60"/>
 	</Params>
 	<DataSets>
-		<DataSet IsMultiRecords="0" name="dato" type="SQL">
-      <SQL>SELECT NOMBRE_COMPLETO AS deudor, DOCUMENTO_UNICO as dui, DIRECCION as direccion, FORMAT(FECHA_NACIMIENTO, 'dd') as dia, edad FROM FA.CLIENTE WHERE CODIGO_CLIENTE = @CODIGO_CLIENTE</SQL>
+		<DataSet IsMultiRecords="0" name="DATO" type="store_procedure">
+      <SQL>CF.R_PAGARE</SQL>
       <Parameters>
-        <Param type="varchar" name="CODIGO_CLIENTE" />
+        <Param type="varchar" name="CREDITO" />
       </Parameters>
 		</DataSet>
 	</DataSets>
