@@ -1,5 +1,5 @@
 <Report>
-	<DataSource>server=10.0.0.13;database=PRUEBAS;uid=sa;password=P@ssw0rd;</DataSource>
+	<DataSource>server=clindev17;database=clin;uid=sa;password=P@ssw0rd;</DataSource>
 	<Params>
 		<Param name="CREDITO" type="textbox" label="CREDITO" dbtype="String" size="60"/>
 	</Params>

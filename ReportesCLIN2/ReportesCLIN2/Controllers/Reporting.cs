@@ -14,6 +14,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using TheArtOfDev.HtmlRenderer;
 using TheArtOfDev;
 using PdfSharp.Pdf;
+using System.Diagnostics;
 
 namespace ReportesCLIN2.Controllers
 {
@@ -84,7 +85,35 @@ namespace ReportesCLIN2.Controllers
             }
             if (format  == RenderFormat.PDF)
             {
-                TheArtOfDev.HtmlRenderer.PdfSharp.PdfGenerateConfig config = new TheArtOfDev.HtmlRenderer.PdfSharp.PdfGenerateConfig();
+                var nombreArchivo =string.Format("{0}", Guid.NewGuid().ToString());
+                var rutaHtml = HttpContext.Current.Server.MapPath("~/temp/" + nombreArchivo + ".html");
+                File.AppendAllText(rutaHtml , html, System.Text.Encoding.UTF8);
+                byte[] salida = { 0x10 };
+                using (Process p = new Process())
+                {
+                    var proc1 = new ProcessStartInfo();
+                   
+                    proc1.UseShellExecute = false;
+                    proc1.WorkingDirectory = HttpContext.Current.Server.MapPath("~/");
+                    proc1.FileName = HttpContext.Current.Server.MapPath("~/wkhtmltopdf.exe");
+                    //proc1.Verb = "toc";
+                    proc1.Arguments = "toc " + rutaHtml + " " + ("temp/" + nombreArchivo + ".pdf");
+                    proc1.WindowStyle = ProcessWindowStyle.Hidden;
+                    p.StartInfo = proc1;
+                    p.Start();
+                    do
+                    {
+                        if (p.HasExited)
+                            break;
+
+                    } while (!p.HasExited);
+                    data = File.ReadAllBytes(HttpContext.Current.Server.MapPath("~/temp/" + nombreArchivo + ".pdf"));
+
+                }
+            
+
+
+                /*TheArtOfDev.HtmlRenderer.PdfSharp.PdfGenerateConfig config = new TheArtOfDev.HtmlRenderer.PdfSharp.PdfGenerateConfig();
 
                 config.PageSize = PdfSharp.PageSize.A4;
                 config.MarginBottom = 60;
@@ -97,13 +126,15 @@ namespace ReportesCLIN2.Controllers
                 {
                     pdf.Save(stream, true);
                     data = stream.ToArray();
-                }
-                   
+                }*/
+
 
             }
             return data;
         }
-            public static string Render(string reporte,string parametros)
+
+
+        public static string Render(string reporte,string parametros)
         {
 
 
@@ -162,7 +193,7 @@ namespace ReportesCLIN2.Controllers
             }
             DotLiquid.Template template = DotLiquid.Template.Parse(texto);
             string html = template.Render(Hash.FromDictionary(objeto));
-            return html;
+            return html.HtmlCaracters();
         }
     }
 }
