@@ -1,0 +1,21 @@
+<Report>
+   <DataSource>server=clindev17;database=clin;uid=sa;password=P@ssw0rd;</DataSource>
+   <Params>
+      <Param name="CREDITO" type="textbox" label="Credito" dbtype="varchar" />
+   </Params>
+   <DataSets>
+      <DataSet IsMultiRecords="1" name="dato" type="query">
+         <SQL>SELECT ROW_NUMBER() over (order by auditoria) as FILA, ROW_NUMBER() over (order by auditoria) % 2 as DIV ,a.CODIGO_CODEUDOR, b.NOMBRE_ACTIVIDAD, dbo.DPIEnLetra( b.DOCUMENTO_UNICO, 0) AS DPI_LETRA, 
+DOCUMENTO_UNICO AS DPI , b.NOMBRE_COMPLETO as NOMBRE,  /**FECHA ACTUAL**/
+						 GETDATE() AS FECHA_ACTUAL,
+						rtrim(dbo.EnteroEnLetra(DAY(GETDATE()))) AS FECHA_ACTUAL_DIA,
+						rtrim(dbo.GetNombreMes(MONTH(GETDATE()))) AS FECHA_ACTUAL_MES,
+						rtrim(dbo.EnteroEnLetra(YEAR(GETDATE()))) AS FECHA_ACTUAL_ANIO FROM cf.SOLICITUD_CODEUDOR a
+inner join FA.CLIENTE b on b.CODIGO_CLIENTE = a.CODIGO_CODEUDOR
+where a.CREDITO = @CREDITO</SQL>
+         <Parameters>
+            <Param type="varchar" name="CREDITO" />
+         </Parameters>
+      </DataSet>
+   </DataSets>
+</Report>

@@ -23,7 +23,8 @@ namespace ReportesCLIN2.Controllers
         public enum RenderFormat
         {
             PDF = 1,
-            WORD = 2
+            WORD = 2,
+            HTML = 3
         }
         private static System.Data.DbType GetType(string type)
         {
@@ -56,7 +57,20 @@ namespace ReportesCLIN2.Controllers
 
         public static byte[] Export(string reporte, string parametros, RenderFormat format)
         {
-            string html = Render(reporte, parametros);
+            string html = Render(reporte, parametros, format);
+            Dictionary<string, string> propiedades = new Dictionary<string, string>();
+            var xml = XDocument.Load(HttpContext.Current.Server.MapPath("~/Reports/" + reporte + ".data"));
+
+            XNamespace ns = xml.Root.GetDefaultNamespace();
+            var x = xml.Descendants().Where(q => q.Name.LocalName == "Properties").FirstOrDefault();
+            if (x != null)
+            {
+                x.Elements().ToList().ForEach((e) =>
+              {
+                  propiedades.Add(e.Attribute("name").Value, e.Attribute("value").Value);
+
+              });
+            }
             byte[] data = null;
             if (format == RenderFormat.WORD)
             {
@@ -70,12 +84,10 @@ namespace ReportesCLIN2.Controllers
                         {
                             mainPart = package.AddMainDocumentPart();
                             new DocumentFormat.OpenXml.Wordprocessing.Document(new Body()).Save(mainPart);
-
                         }
 
                         HtmlConverter converter = new HtmlConverter(mainPart);
                         converter.ParseHtml(html);
-
                         mainPart.Document.Save();
                     }
 
@@ -92,12 +104,13 @@ namespace ReportesCLIN2.Controllers
                 using (Process p = new Process())
                 {
                     var proc1 = new ProcessStartInfo();
-                   
+                    string props = string.Join(" ", propiedades.Select(e => string.Format("--{0} {1}", e.Key, e.Value)));
+                    
                     proc1.UseShellExecute = false;
                     proc1.WorkingDirectory = HttpContext.Current.Server.MapPath("~/");
                     proc1.FileName = HttpContext.Current.Server.MapPath("~/wkhtmltopdf.exe");
                     //proc1.Verb = "toc";
-                    proc1.Arguments = "toc " + rutaHtml + " " + ("temp/" + nombreArchivo + ".pdf");
+                    proc1.Arguments = "" +props + " " + rutaHtml + " " + ("temp/" + nombreArchivo + ".pdf");
                     proc1.WindowStyle = ProcessWindowStyle.Hidden;
                     p.StartInfo = proc1;
                     p.Start();
@@ -134,10 +147,11 @@ namespace ReportesCLIN2.Controllers
         }
 
 
-        public static string Render(string reporte,string parametros)
+        public static string Render(string reporte,string parametros, RenderFormat format)
         {
 
-
+            System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("es-ES");
+            System.Threading.Thread.CurrentThread.CurrentCulture = ci;
             DotLiquid.Template.RegisterFilter(typeof(Reports.LiquidFilters));
 
 
@@ -191,6 +205,8 @@ namespace ReportesCLIN2.Controllers
                     }
                 });
             }
+            objeto.Add("RenderFormat", format.ToString());
+            objeto.Add("Today", DateTime.Now);
             DotLiquid.Template template = DotLiquid.Template.Parse(texto);
             string html = template.Render(Hash.FromDictionary(objeto));
             return html.HtmlCaracters();

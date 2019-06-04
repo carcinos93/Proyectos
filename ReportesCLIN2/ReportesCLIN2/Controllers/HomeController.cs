@@ -85,7 +85,7 @@ namespace ReportesCLIN2.Controllers
                 return NotFound();
 
 
-            ViewBag.DataHTML = Reporting.Render(reporte, parametros);
+            ViewBag.DataHTML = Reporting.Render(reporte, parametros, Reporting.RenderFormat.HTML );
 
             return View("RenderViewer");
         }

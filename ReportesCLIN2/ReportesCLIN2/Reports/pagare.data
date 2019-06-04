@@ -1,5 +1,12 @@
 <Report>
-	<DataSource>server=clindev17;database=clin;uid=sa;password=P@ssw0rd;</DataSource>
+  <Properties>
+    <Property name="margin-left" value="30"></Property>
+    <Property name="margin-right" value="30"></Property>
+    <Property name="margin-bottom" value="25"></Property>
+    <Property name="margin-top" value="25"></Property>
+    <Property name="page-size" value="Letter"></Property>
+  </Properties>
+	<DataSource>server=10.0.0.13;database=PRUEBAS;uid=sa;password=P@ssw0rd;</DataSource>
 	<Params>
 		<Param name="CREDITO" type="textbox" label="CREDITO" dbtype="String" size="60"/>
 	</Params>
@@ -10,5 +17,32 @@
         <Param type="varchar" name="CREDITO" />
       </Parameters>
 		</DataSet>
+      <DataSet IsMultiRecords="1" name="CODEUDOR" type="query">
+         <SQL>select ROW_NUMBER() over (order by auditoria) as FILA,d.* from (
+SELECT  a.AUDITORIA,
+ CR.CREDITO,CLI.NOMBRE_COMPLETO AS CLIENTE ,CLI.DOCUMENTO_UNICO,RTRIM(dbo.DPIEnLetra(DOCUMENTO_UNICO, 0)) AS DPI_LETRAS, rtrim(dbo.EnteroEnLetra(CLI.EDAD)) AS EDAD, [AS].ESTADO_FAMILIAR.NOMBRE AS ESTADO_CIVIL, [AS].PROFESIONES.NOMBRE_PROFESION AS PROFESION, [AS].PAIS.GENTILICIO AS NACIONALIDAD, 
+                         CLI.DIRECCION
+FROM CF.CREDITOS AS CR 
+INNER JOIN cf.SOLICITUD_CODEUDOR a ON a.CREDITO = CR.CREDITO
+INNER JOIN FA.CLIENTE CLI on CLI.CODIGO_CLIENTE = a.CODIGO_CODEUDOR
+INNER JOIN[AS].ESTADO_FAMILIAR ON CLI.ESTADO_FAMILIAR = [AS].ESTADO_FAMILIAR.CODIGO_ESTADO 
+INNER JOIN [AS].PROFESIONES ON CLI.CODIGO_PROFESION = [AS].PROFESIONES.CODIGO_PROFESION
+INNER JOIN [AS].PAIS ON CLI.PAIS_NACIMIENTO = [AS].PAIS.CODIGO_PAIS
+where a.CREDITO = @CREDITO
+
+UNION ALL 
+SELECT 1 AS AUDITORIA ,
+ CR.CREDITO,CLI.NOMBRE_COMPLETO AS CLIENTE ,CLI.DOCUMENTO_UNICO,RTRIM(dbo.DPIEnLetra(DOCUMENTO_UNICO, 0)) AS DPI_LETRAS, rtrim(dbo.EnteroEnLetra(CLI.EDAD)) AS EDAD, [AS].ESTADO_FAMILIAR.NOMBRE AS ESTADO_CIVIL, [AS].PROFESIONES.NOMBRE_PROFESION AS PROFESION, [AS].PAIS.GENTILICIO AS NACIONALIDAD, 
+                         CLI.DIRECCION
+FROM CF.CREDITOS AS CR 
+INNER JOIN FA.CLIENTE CLI on CLI.CODIGO_CLIENTE = CR.CODIGO_CLIENTE
+INNER JOIN[AS].ESTADO_FAMILIAR ON CLI.ESTADO_FAMILIAR = [AS].ESTADO_FAMILIAR.CODIGO_ESTADO 
+INNER JOIN [AS].PROFESIONES ON CLI.CODIGO_PROFESION = [AS].PROFESIONES.CODIGO_PROFESION
+INNER JOIN [AS].PAIS ON CLI.PAIS_NACIMIENTO = [AS].PAIS.CODIGO_PAIS
+where CR.CREDITO = @CREDITO) as d</SQL>
+         <Parameters>
+            <Param type="varchar" name="CREDITO" />
+         </Parameters>
+      </DataSet>
 	</DataSets>
 </Report>

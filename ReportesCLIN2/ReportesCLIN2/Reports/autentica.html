@@ -1,0 +1,28 @@
+﻿<!DOCTYP&Eacute; html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+	<style>
+        body {  text-rendering: geometricPrecision; }
+	</style>
+</head>
+<body>
+
+<p style="font-family:'Arial Narrow';font-size:10pt;line-height:24pt;text-align:justify">En la ciudad de Guatemala, el {{ dato[0].FECHA_ACTUAL_DIA | downcase }} de {{ dato[0].FECHA_ACTUAL_MES | downcase  }} de {{ dato[0].FECHA_ACTUAL_ANIO | downcase  }}, Yo, como Notaria, DOY FE que la(s) firma(s) que antecede(n) es(on) auténtica(s) por haber sido puesta(s) el día de hoy en mi presencia por 
+ {%  for ds in dato %}
+ ({{ ds.FILA | format: "roman" }}) <b>{{ds.NOMBRE}}</b> quien  se identifica con Documento Personal de Identificación -DPI-con Código Único de Identificación {{ ds.DPI_LETRA }} ({{ ds.DPI }}), extendido por el Registro Nacional de las Personas de la República de Guatemala; {% endfor %} la(s) cual(es) calza(n) en el presente Pagare contenido en <span style="color:red;font-weight:bold">(número de hojas)</span> hojas tamaño carta, quien(es) firma(n) nuevamente la presente acta de Legalización de Firma juntamente con la infrascrita notaria.  DOY FE:</p>
+    
+	<table border="0" style="width:100%;font-size:10pt;font-family:'Arial Narrow'">
+		{% tablerow ds in dato cols:2 %}
+			 <br/><br/><br/><br/>_________________________________ <br/>
+			{{ ds.NOMBRE }}
+		{% endtablerow %}
+	</table>
+	<br/>
+<p style="font-family:'Arial Narrow';font-size:10pt;">
+	<b>ANTE MÍ:</b>
+</p>	
+</body>
+</html>
