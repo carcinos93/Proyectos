@@ -44,21 +44,18 @@ namespace ReportesCLIN2.Controllers
                 param = Request.Params["parametros"];
 
             string formato = Request.Params["formato"];
-            Reporting.RenderFormat formatoExport;
-            if (formato.ToLower() == "pdf")
-                formatoExport = Reporting.RenderFormat.PDF;
-            else
-                formatoExport = Reporting.RenderFormat.WORD;
+            Reporting.RenderFormat formatoExport = new Reporting.RenderFormat(formato);
 
 
-            string extension = (formatoExport == Reporting.RenderFormat.PDF ? "pdf" : "docx");
+
+            string extension = formatoExport.extension;
 
             if (!Reporting.ExistsReport(reporte))
                 this.RedirectToAction("NotFound");
 
 
 
-            return File(Reporting.Export(reporte, param, formatoExport), "application/octet-stream", reporte + "." + extension);
+            return File(Reporting.Export(reporte, param, formatoExport.formato), "application/octet-stream", reporte + "." + extension);
 
         }
 
@@ -85,7 +82,7 @@ namespace ReportesCLIN2.Controllers
                 return NotFound();
 
 
-            ViewBag.DataHTML = Reporting.Render(reporte, parametros, Reporting.RenderFormat.HTML );
+            ViewBag.DataHTML = Reporting.Render(reporte, parametros, Reporting.EnumRenderFormat.HTML );
 
             return View("RenderViewer");
         }

@@ -20,7 +20,39 @@ namespace ReportesCLIN2.Controllers
 {
     public class Reporting
     {
-        public enum RenderFormat
+        public class RenderFormat
+        {
+            public RenderFormat(string renderFormat)
+            {
+
+                switch (renderFormat)
+                {
+                    case "pdf":
+                        extension = "pdf";
+                        formato = EnumRenderFormat.PDF;
+                        break;
+                    case "word":
+                        extension = "docx";
+                        formato = EnumRenderFormat.WORD;
+                        break;
+                    case "html":
+                        extension = "html";
+                        formato = EnumRenderFormat.HTML;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            public EnumRenderFormat formato;
+            public string extension;
+
+
+        }
+
+
+        
+
+        public enum EnumRenderFormat
         {
             PDF = 1,
             WORD = 2,
@@ -55,7 +87,7 @@ namespace ReportesCLIN2.Controllers
 
         }
 
-        public static byte[] Export(string reporte, string parametros, RenderFormat format)
+        public static byte[] Export(string reporte, string parametros, EnumRenderFormat format)
         {
             string html = Render(reporte, parametros, format);
             Dictionary<string, string> propiedades = new Dictionary<string, string>();
@@ -72,7 +104,7 @@ namespace ReportesCLIN2.Controllers
               });
             }
             byte[] data = null;
-            if (format == RenderFormat.WORD)
+            if (format == EnumRenderFormat.WORD)
             {
                 using (MemoryStream generatedDocument = new MemoryStream())
                 {
@@ -95,7 +127,7 @@ namespace ReportesCLIN2.Controllers
                     data = generatedDocument.ToArray();
                 }
             }
-            if (format  == RenderFormat.PDF)
+            if (format  == EnumRenderFormat.PDF)
             {
                 var nombreArchivo =string.Format("{0}", Guid.NewGuid().ToString());
                 var rutaHtml = HttpContext.Current.Server.MapPath("~/temp/" + nombreArchivo + ".html");
@@ -123,6 +155,7 @@ namespace ReportesCLIN2.Controllers
                     data = File.ReadAllBytes(HttpContext.Current.Server.MapPath("~/temp/" + nombreArchivo + ".pdf"));
 
                 }
+
             
 
 
@@ -143,11 +176,16 @@ namespace ReportesCLIN2.Controllers
 
 
             }
+            if (format == EnumRenderFormat.HTML)
+            {
+                data = System.Text.Encoding.ASCII.GetBytes(html);
+            }
+
             return data;
         }
 
 
-        public static string Render(string reporte,string parametros, RenderFormat format)
+        public static string Render(string reporte,string parametros, EnumRenderFormat format)
         {
 
             System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("es-ES");

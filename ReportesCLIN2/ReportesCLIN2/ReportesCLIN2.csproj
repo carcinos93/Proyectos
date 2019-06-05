@@ -190,6 +190,7 @@
     <Content Include="Reports\movimientos.data">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="wkhtmltopdf.exe" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
