@@ -1,23 +1,37 @@
 ﻿/// <reference path="typings/jquery/jquery.d.ts" />
 function resizeIframe(obj) {
     obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
-  }
+}
+
+var getPartametros = (): string => {
+    var obj = new Object();
+    $('.param').each((i, e) => {
+
+        var element = $(e) as JQuery;
+        obj[element.attr("name")] = element.val();
+    });
+    var parametros = (JSON.stringify(obj));
+    return parametros;
+}
 $(document).ready(() => {
     $("#renderReport").on('load', (e) => {
         resizeIframe(e);
     });
+
+
+
+    $("#export").on('click', (e) => {
+        let parametros = getPartametros();
+        window.open(window['url_base_export'] + "?formato="+ $("#format").val() +"&parametros=" + parametros, "_blank");
+
+    });
+
     $("#render").on('click', (e) => {
-        var obj = new Object();
-        $('.param').each((i, e) => {
+        let parametros = getPartametros();
+        $("#renderReport").attr("src", window['url_base_render'] + "?parametros=" + parametros);
 
-            var element = $(e) as JQuery;
-            obj[element.attr("name")] = element.val();
-        });
-        var parametros = ( JSON.stringify(obj) );
-        $("#renderReport").attr("src", window['url_base'] + "?parametros=" + parametros);
-
-        $("#renderReport").height($("#renderReport").contents().document.body.scrollHeight + 'px');
+        //$("#renderReport").height($("#renderReport").contents().document.body.scrollHeight + 'px');
         //obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
     })
-    
+
 });

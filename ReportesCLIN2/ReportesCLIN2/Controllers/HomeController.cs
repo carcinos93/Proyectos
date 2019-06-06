@@ -16,6 +16,7 @@ namespace ReportesCLIN2.Controllers
     {
         public ActionResult Index()
         {
+
             return View();
         }
         public ActionResult NotFound()
