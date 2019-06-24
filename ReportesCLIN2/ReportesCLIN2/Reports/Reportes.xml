@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Reportes>
+  <Reporte name="pagare" text="Pagare"> Documento pagare </Reporte>
+  <Reporte name="movimientos" text="Movimientos">Lista de movimientos</Reporte>
+</Reportes>

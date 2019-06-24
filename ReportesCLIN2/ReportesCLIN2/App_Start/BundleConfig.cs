@@ -24,6 +24,7 @@ namespace ReportesCLIN2
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-grid.css",
                       "~/Content/site.css"));
         }
     }

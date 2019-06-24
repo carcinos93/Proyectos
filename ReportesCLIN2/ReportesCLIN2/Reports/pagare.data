@@ -1,10 +1,13 @@
-<Report>
+<Report template="template1.docx">
   <Properties>
-    <Property name="margin-left" value="30"></Property>
-    <Property name="margin-right" value="30"></Property>
-    <Property name="margin-bottom" value="25"></Property>
-    <Property name="margin-top" value="25"></Property>
+    <Property name="margin-left" value="16"></Property>
+    <Property name="margin-right" value="16"></Property>
+    <Property name="margin-bottom" value="15"></Property>
+    <Property name="margin-top" value="10"></Property>
     <Property name="page-size" value="Letter"></Property>
+    <!--<Property name="page-number" value="true" start="1" fmt="decimal "></Property>-->
+    <Property name="footer-right" value="[page]"></Property>
+    <Property name="footer-font-size" value="7"></Property>
   </Properties>
 	<DataSource>server=10.0.0.13;database=PRUEBAS;uid=sa;password=P@ssw0rd;</DataSource>
 	<Params>

@@ -50,7 +50,7 @@ namespace ReportesCLIN2.Controllers
         }
 
 
-        
+
 
         public enum EnumRenderFormat
         {
@@ -92,6 +92,12 @@ namespace ReportesCLIN2.Controllers
             string html = Render(reporte, parametros, format);
             Dictionary<string, string> propiedades = new Dictionary<string, string>();
             var xml = XDocument.Load(HttpContext.Current.Server.MapPath("~/Reports/" + reporte + ".data"));
+            PageNumberType pageNumber = new PageNumberType()
+            {
+                ChapterSeparator = ChapterSeparatorValues.Colon,
+                Start = 1,
+                Format = NumberFormatValues.Decimal
+            };
 
             XNamespace ns = xml.Root.GetDefaultNamespace();
             var x = xml.Descendants().Where(q => q.Name.LocalName == "Properties").FirstOrDefault();
@@ -108,16 +114,40 @@ namespace ReportesCLIN2.Controllers
             {
                 using (MemoryStream generatedDocument = new MemoryStream())
                 {
-                    using (WordprocessingDocument package = WordprocessingDocument.Create(generatedDocument, WordprocessingDocumentType.Document))
+
+                    string template = xml.Root.Attribute("template") == null ? null : xml.Root.Attribute("template").Value;
+
+                    using (var templateFile = File.Open(HttpContext.Current.Server.MapPath("~/templates/" + template), FileMode.Open, FileAccess.Read))
+                    {
+                  
+                        templateFile.CopyTo(generatedDocument);
+                    }
+
+                    using (WordprocessingDocument package = WordprocessingDocument.Open(generatedDocument, true))
                     {
                         MainDocumentPart mainPart = package.MainDocumentPart;
+                        SectionProperties sectionProps = new SectionProperties();
+
+                        Int32 top = (int)((propiedades.ContainsKey("margin-top") ? int.Parse(propiedades["margin-top"].ToString()) : 0) * 56.7);
+                        Int32 bottom = (int)((propiedades.ContainsKey("margin-bottom") ? int.Parse(propiedades["margin-bottom"].ToString()) : 0) * 56.7);
+                        UInt32 left = (uint)((propiedades.ContainsKey("margin-left") ? int.Parse(propiedades["margin-left"].ToString()) : 0) * 56.7);
+                        UInt32 right = (uint)((propiedades.ContainsKey("margin-right") ? int.Parse(propiedades["margin-right"].ToString()) : 0) * 56.7);
+
+
+
+                        PageMargin pageMargin = new PageMargin() { Top = top, Bottom = bottom, Left = left, Right = right };
 
                         if (mainPart == null)
                         {
+                           
                             mainPart = package.AddMainDocumentPart();
                             new DocumentFormat.OpenXml.Wordprocessing.Document(new Body()).Save(mainPart);
-                        }
 
+
+
+                        }
+                        sectionProps.Append(pageMargin);
+                        mainPart.Document.Body.Append(sectionProps);
                         HtmlConverter converter = new HtmlConverter(mainPart);
                         converter.ParseHtml(html);
                         mainPart.Document.Save();
@@ -127,22 +157,22 @@ namespace ReportesCLIN2.Controllers
                     data = generatedDocument.ToArray();
                 }
             }
-            if (format  == EnumRenderFormat.PDF)
+            if (format == EnumRenderFormat.PDF)
             {
-                var nombreArchivo =string.Format("{0}", Guid.NewGuid().ToString());
+                var nombreArchivo = string.Format("{0}", Guid.NewGuid().ToString());
                 var rutaHtml = HttpContext.Current.Server.MapPath("~/temp/" + nombreArchivo + ".html");
-                File.AppendAllText(rutaHtml , html, System.Text.Encoding.UTF8);
+                File.AppendAllText(rutaHtml, html, System.Text.Encoding.UTF8);
                 byte[] salida = { 0x10 };
                 using (Process p = new Process())
                 {
                     var proc1 = new ProcessStartInfo();
                     string props = string.Join(" ", propiedades.Select(e => string.Format("--{0} {1}", e.Key, e.Value)));
-                    
+
                     proc1.UseShellExecute = false;
                     proc1.WorkingDirectory = HttpContext.Current.Server.MapPath("~/");
                     proc1.FileName = HttpContext.Current.Server.MapPath("~/wkhtmltopdf.exe");
                     //proc1.Verb = "toc";
-                    proc1.Arguments = "" +props + " " + rutaHtml + " " + ("temp/" + nombreArchivo + ".pdf");
+                    proc1.Arguments = "" + props + " " + rutaHtml + " " + ("temp/" + nombreArchivo + ".pdf");
                     proc1.WindowStyle = ProcessWindowStyle.Hidden;
                     p.StartInfo = proc1;
                     p.Start();
@@ -156,7 +186,7 @@ namespace ReportesCLIN2.Controllers
 
                 }
 
-            
+
 
 
                 /*TheArtOfDev.HtmlRenderer.PdfSharp.PdfGenerateConfig config = new TheArtOfDev.HtmlRenderer.PdfSharp.PdfGenerateConfig();
@@ -185,7 +215,7 @@ namespace ReportesCLIN2.Controllers
         }
 
 
-        public static string Render(string reporte,string parametros, EnumRenderFormat format)
+        public static string Render(string reporte, string parametros, EnumRenderFormat format)
         {
 
             System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo("es-ES");
@@ -210,7 +240,7 @@ namespace ReportesCLIN2.Controllers
                     string Type = e.Attribute("type") == null ? "query" : e.Attribute("type").Value;
                     string Name = e.Attribute("name").Value;
                     string SQL = e.Element(e.GetDefaultNamespace() + "SQL").Value;
-                   
+
                     System.Data.CommandType commandType = Type == "query" ? System.Data.CommandType.Text : System.Data.CommandType.StoredProcedure;
                     using (var conn = DbFactory.Conn(strconn))
                     {
@@ -247,7 +277,7 @@ namespace ReportesCLIN2.Controllers
             objeto.Add("Today", DateTime.Now);
             DotLiquid.Template template = DotLiquid.Template.Parse(texto);
             string html = template.Render(Hash.FromDictionary(objeto));
-            return html.HtmlCaracters();
+            return html;
         }
     }
 }

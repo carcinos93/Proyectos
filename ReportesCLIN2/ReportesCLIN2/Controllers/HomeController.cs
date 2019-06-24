@@ -12,12 +12,32 @@ using System.Collections.Specialized;
 
 namespace ReportesCLIN2.Controllers
 {
+    using Models;
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
+            var xml = XDocument.Load(Server.MapPath("~/Reports/Reportes.xml"));
+            IList<Reporte> reportes = new List<Reporte>();
+            if (xml != null)
+            {
+                XNamespace ns = xml.Root.GetDefaultNamespace();
+                var x = xml.Descendants().Where(q => q.Name.LocalName == "Reportes").FirstOrDefault();
+                Reports.Controls controls = new Reports.Controls();
+                x.Descendants().ToList().ForEach((e) =>
+               {
+                   reportes.Add(new Reporte
+                   {
+                       name = e.Attribute("name").Value,
+                       text = e.Attribute("text").Value,
+                       description = e.Value
+                   });
+               });
+            }
 
-            return View();
+            //ViewBag.Reportes = reportes;
+           
+            return View(reportes);
         }
         public ActionResult NotFound()
         {

@@ -21,7 +21,6 @@ namespace ReportesCLIN2
                 .Replace("Ú", "&Uacute;")
                 .Replace("ñ", "&ntilde;")
                 .Replace("Ñ", "&Ntilde;")
-                .Replace("@","&commat;")
                 .Replace("“", "&#x201C;")
                 .Replace("”", "&#x201D;");
 
