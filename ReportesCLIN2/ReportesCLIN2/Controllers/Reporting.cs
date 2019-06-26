@@ -124,16 +124,19 @@ namespace ReportesCLIN2.Controllers
             {
                 using (MemoryStream generatedDocument = new MemoryStream())
                 {
-
+                    bool existeTemplate = false;
                     string template = xml.Root.Attribute("template") == null ? null : xml.Root.Attribute("template").Value;
-
-                    using (var templateFile = File.Open(HttpContext.Current.Server.MapPath("~/templates/" + template), FileMode.Open, FileAccess.Read))
+                    if (!string.IsNullOrWhiteSpace(template) & System.IO.File.Exists(HttpContext.Current.Server.MapPath("~/templates/" + template)))
                     {
-                  
-                        templateFile.CopyTo(generatedDocument);
+                        using (var templateFile = File.Open(HttpContext.Current.Server.MapPath("~/templates/" + template), FileMode.Open, FileAccess.Read))
+                        {
+
+                            templateFile.CopyTo(generatedDocument);
+                            existeTemplate = true;
+                        }
                     }
 
-                    using (WordprocessingDocument package = WordprocessingDocument.Open(generatedDocument, true))
+                    using (WordprocessingDocument package = ( existeTemplate ? WordprocessingDocument.Open(generatedDocument, true) : WordprocessingDocument.Create(generatedDocument, WordprocessingDocumentType.Document)  ) )
                     {
                         MainDocumentPart mainPart = package.MainDocumentPart;
                         SectionProperties sectionProps = new SectionProperties();
@@ -152,8 +155,6 @@ namespace ReportesCLIN2.Controllers
                            
                             mainPart = package.AddMainDocumentPart();
                             new DocumentFormat.OpenXml.Wordprocessing.Document(new Body()).Save(mainPart);
-
-
 
                         }
                         sectionProps.Append(pageMargin);
@@ -224,7 +225,15 @@ namespace ReportesCLIN2.Controllers
             return data;
         }
 
+       
 
+        /// <summary>
+        /// Genera el contenido html 
+        /// </summary>
+        /// <param name="reporte">Nombre del reporte</param>
+        /// <param name="parametros">Parametros</param>
+        /// <param name="format">Formato</param>
+        /// <returns></returns>
         public static string Render(string reporte, string parametros, EnumRenderFormat format)
         {
 
