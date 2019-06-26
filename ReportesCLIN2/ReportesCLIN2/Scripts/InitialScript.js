@@ -15,10 +15,12 @@ $(document).ready(function () {
     $("#renderReport").on('load', function (e) {
         resizeIframe(e);
     });
+    ///Evento click en boton de exportar
     $("#export").on('click', function (e) {
         var parametros = getPartametros();
         window.open(window['url_base_export'] + "?formato=" + $("#format").val() + "&parametros=" + parametros, "_blank");
     });
+    ///Evento click en boton de visualizar reporte
     $("#render").on('click', function (e) {
         var parametros = getPartametros();
         $("#renderReport").attr("src", window['url_base_render'] + "?parametros=" + parametros);

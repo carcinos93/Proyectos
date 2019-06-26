@@ -76,7 +76,7 @@ namespace ReportesCLIN2.Controllers
 
 
 
-            return File(Reporting.Export(reporte, param, formatoExport.formato), "application/octet-stream", reporte + "." + extension);
+            return File(Reporting.Export(reporte, param, formatoExport.formato), "application/octet-stream", string.Format("{0}_{1:yyyyMMdd_HHmmss}",reporte, DateTime.Now) + "." + extension);
 
         }
 

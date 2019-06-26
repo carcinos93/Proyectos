@@ -12,17 +12,28 @@ namespace ReportesCLIN2.Reports
         {
             this.resultado = new List<string>();
         }
+        /// <summary>
+        /// Agrega control tipo fecha
+        /// </summary>
+        /// <param name="Properties"></param>
         public void AddDate(dynamic Properties)
         {
             string control = @"<div class='form-group'><label>{1}</label>&nbsp;<input class='param form-control' type='date' name='{0}'/></div>";
             this.resultado.Add(string.Format(control, Properties.name, Properties.label));
         }
+        /// <summary>
+        /// Agrega control tipo texto
+        /// </summary>
+        /// <param name="Properties"></param>
         public void AddTextBox(dynamic Properties)
         {
             string control = @"<div class='form-group'><label>{1}</label>&nbsp;<input class='param form-control' type='textbox' name='{0}'/></div>";
             this.resultado.Add(string.Format(control, Properties.name, Properties.label));
         }
-
+        /// <summary>
+        /// Retorna todos los controles 
+        /// </summary>
+        /// <returns></returns>
        public string Render()
         {
             string render = "";

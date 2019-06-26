@@ -90,26 +90,31 @@ namespace ReportesCLIN2.Controllers
                     return System.Data.DbType.Object;
             }
         }
-
+        /// <summary>
+        /// Funcion que verifica si existe la plantilla html con su respectivo archivo de configuracion
+        /// </summary>
+        /// <param name="reporte">Nombre del reporte</param>
+        /// <returns></returns>
         public static bool ExistsReport(string reporte)
         {
             return (!string.IsNullOrWhiteSpace(reporte) & System.IO.File.Exists(HttpContext.Current.Server.MapPath("~/Reports/" + reporte + ".html")) & System.IO.File.Exists(HttpContext.Current.Server.MapPath("~/Reports/" + reporte + ".data")));
 
         }
-
+        /// <summary>
+        /// Funcion que exporta el reporte segun el formato seleccionado
+        /// </summary>
+        /// <param name="reporte">Nombre del reporte</param>
+        /// <param name="parametros">Parametros del reporte</param>
+        /// <param name="format">Formato</param>
+        /// <returns></returns>
         public static byte[] Export(string reporte, string parametros, EnumRenderFormat format)
         {
             string html = Render(reporte, parametros, format);
             Dictionary<string, string> propiedades = new Dictionary<string, string>();
             var xml = XDocument.Load(HttpContext.Current.Server.MapPath("~/Reports/" + reporte + ".data"));
-            PageNumberType pageNumber = new PageNumberType()
-            {
-                ChapterSeparator = ChapterSeparatorValues.Colon,
-                Start = 1,
-                Format = NumberFormatValues.Decimal
-            };
 
             XNamespace ns = xml.Root.GetDefaultNamespace();
+            ///Se recuperan todas las propiedades
             var x = xml.Descendants().Where(q => q.Name.LocalName == "Properties").FirstOrDefault();
             if (x != null)
             {
