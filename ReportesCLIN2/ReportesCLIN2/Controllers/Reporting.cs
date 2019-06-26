@@ -20,6 +20,9 @@ namespace ReportesCLIN2.Controllers
 {
     public class Reporting
     {
+        /// <summary>
+        /// Extension de los formatos
+        /// </summary>
         public class RenderFormat
         {
             public RenderFormat(string renderFormat)
@@ -51,13 +54,20 @@ namespace ReportesCLIN2.Controllers
 
 
 
-
+        /// <summary>
+        /// Formatos disponibles
+        /// </summary>
         public enum EnumRenderFormat
         {
             PDF = 1,
             WORD = 2,
             HTML = 3
         }
+        /// <summary>
+        /// Funcion que retorna el tipo de dato
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         private static System.Data.DbType GetType(string type)
         {
             switch (type.ToLower())
@@ -255,7 +265,7 @@ namespace ReportesCLIN2.Controllers
                             parameters.Add(parameterName, value, dbType);
 
                         });
-                        if (IsMultiRecords)
+                        if (IsMultiRecords) //Si es tiene mas de una fila
                         {
                             List<object> datos = new List<object>();
                             conn.Query(sql: SQL, param: parameters, commandType: commandType).ToList().ForEach((f) =>
@@ -273,6 +283,7 @@ namespace ReportesCLIN2.Controllers
                     }
                 });
             }
+            //variable globales que pueden ser usadas en el reporte
             objeto.Add("RenderFormat", format.ToString());
             objeto.Add("Today", DateTime.Now);
             DotLiquid.Template template = DotLiquid.Template.Parse(texto);
