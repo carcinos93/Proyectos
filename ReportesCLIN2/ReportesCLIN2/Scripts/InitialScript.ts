@@ -6,7 +6,6 @@ function resizeIframe(obj) {
 var getPartametros = (): string => {
     var obj = new Object();
     $('.param').each((i, e) => {
-
         var element = $(e) as JQuery;
         obj[element.attr("name")] = element.val();
     });

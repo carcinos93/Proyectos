@@ -27,8 +27,8 @@ namespace ReportesCLIN2.Reports
         /// <param name="Properties"></param>
         public void AddTextBox(dynamic Properties)
         {
-            string control = @"<div class='form-group'><label>{1}</label>&nbsp;<input class='param form-control' type='textbox' name='{0}'/></div>";
-            this.resultado.Add(string.Format(control, Properties.name, Properties.label));
+            string control = @"<div class='form-group'><label>{1}</label>&nbsp;<input class='param form-control' type='textbox' name='{0}' value='{2}'/></div>";
+            this.resultado.Add(string.Format(control, Properties.name, Properties.label, Properties.value));
         }
         /// <summary>
         /// Retorna todos los controles 
