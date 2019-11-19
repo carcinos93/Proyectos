@@ -12,9 +12,30 @@ using System.Collections.Specialized;
 
 namespace ReportesCLIN2.Controllers
 {
+    using Microsoft.Reporting.WebForms;
     using Models;
+    using System.Net;
+    using System.Security.Principal;
+    using System.Web.UI.WebControls;
+
+    public class icustome : IReportServerCredentials
+    {
+        public WindowsIdentity ImpersonationUser { get; set; }
+
+        public ICredentials NetworkCredentials { get { return new System.Net.NetworkCredential("nelso", "Nightmare1"); } }
+
+        public bool GetFormsCredentials(out Cookie authCookie, out string userName, out string password, out string authority)
+        {
+            authCookie = null;
+            userName = "";
+            password = "";
+            authority = "";
+            return false;
+        }
+    }
     public class HomeController : Controller
     {
+        
         public ActionResult Index()
         {
             var xml = XDocument.Load(Server.MapPath("~/Reports/Reportes.xml"));
@@ -36,14 +57,38 @@ namespace ReportesCLIN2.Controllers
             }
 
             //ViewBag.Reportes = reportes;
-           
+
             return View(reportes);
         }
+        [HttpGet]
+        public ActionResult ReportViewer()
+        {
+            var reporte = Request.Params["reporte"];
+            var reportViewer = new ReportViewer()
+            {
+                ProcessingMode = ProcessingMode.Remote,
+                SizeToReportContent = false,
+                Width = Unit.Percentage(100),
+                Height = Unit.Pixel(900),
+                
+            };
+
+            reportViewer.ServerReport.ReportPath = "/Reportes CLIN/" + reporte;
+            reportViewer.ServerReport.ReportServerUrl = new Uri("http://laptop-0hm5b1ni:10110/ReportServer/");
+            reportViewer.ServerReport.ReportServerCredentials = new icustome(); ;
+
+
+            ViewBag.ReportViewer = reportViewer;
+
+            return View("ssrsViewer");
+        }
+
         public ActionResult NotFound()
         {
                 return View("NotFound");
         }
 
+       
 
 
         public FileResult ExportReport(string reporte, string parametros)
