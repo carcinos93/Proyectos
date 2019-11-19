@@ -20,6 +20,9 @@ namespace ReportesCLIN2.Controllers
 {
     public class Reporting
     {
+        /// <summary>
+        /// Extension de los formatos
+        /// </summary>
         public class RenderFormat
         {
             public RenderFormat(string renderFormat)
@@ -51,13 +54,20 @@ namespace ReportesCLIN2.Controllers
 
 
 
-
+        /// <summary>
+        /// Formatos disponibles
+        /// </summary>
         public enum EnumRenderFormat
         {
             PDF = 1,
             WORD = 2,
             HTML = 3
         }
+        /// <summary>
+        /// Funcion que retorna el tipo de dato
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         private static System.Data.DbType GetType(string type)
         {
             switch (type.ToLower())
@@ -80,26 +90,31 @@ namespace ReportesCLIN2.Controllers
                     return System.Data.DbType.Object;
             }
         }
-
+        /// <summary>
+        /// Funcion que verifica si existe la plantilla html con su respectivo archivo de configuracion
+        /// </summary>
+        /// <param name="reporte">Nombre del reporte</param>
+        /// <returns></returns>
         public static bool ExistsReport(string reporte)
         {
             return (!string.IsNullOrWhiteSpace(reporte) & System.IO.File.Exists(HttpContext.Current.Server.MapPath("~/Reports/" + reporte + ".html")) & System.IO.File.Exists(HttpContext.Current.Server.MapPath("~/Reports/" + reporte + ".data")));
 
         }
-
+        /// <summary>
+        /// Funcion que exporta el reporte segun el formato seleccionado
+        /// </summary>
+        /// <param name="reporte">Nombre del reporte</param>
+        /// <param name="parametros">Parametros del reporte</param>
+        /// <param name="format">Formato</param>
+        /// <returns></returns>
         public static byte[] Export(string reporte, string parametros, EnumRenderFormat format)
         {
             string html = Render(reporte, parametros, format);
             Dictionary<string, string> propiedades = new Dictionary<string, string>();
             var xml = XDocument.Load(HttpContext.Current.Server.MapPath("~/Reports/" + reporte + ".data"));
-            PageNumberType pageNumber = new PageNumberType()
-            {
-                ChapterSeparator = ChapterSeparatorValues.Colon,
-                Start = 1,
-                Format = NumberFormatValues.Decimal
-            };
 
             XNamespace ns = xml.Root.GetDefaultNamespace();
+            ///Se recuperan todas las propiedades
             var x = xml.Descendants().Where(q => q.Name.LocalName == "Properties").FirstOrDefault();
             if (x != null)
             {
@@ -264,7 +279,7 @@ namespace ReportesCLIN2.Controllers
                             parameters.Add(parameterName, value, dbType);
 
                         });
-                        if (IsMultiRecords)
+                        if (IsMultiRecords) //Si es tiene mas de una fila
                         {
                             List<object> datos = new List<object>();
                             conn.Query(sql: SQL, param: parameters, commandType: commandType).ToList().ForEach((f) =>
@@ -282,6 +297,7 @@ namespace ReportesCLIN2.Controllers
                     }
                 });
             }
+            //variable globales que pueden ser usadas en el reporte
             objeto.Add("RenderFormat", format.ToString());
             objeto.Add("Today", DateTime.Now);
             DotLiquid.Template template = DotLiquid.Template.Parse(texto);

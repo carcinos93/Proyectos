@@ -8,6 +8,12 @@ namespace ReportesCLIN2.Reports
 {
     public static class LiquidFilters
     {
+        /// <summary>
+        /// Funcion que da formato a un objeto de entrada
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
         public static string Format(object input, string format)
         {
             if (input == null)
@@ -18,7 +24,12 @@ namespace ReportesCLIN2.Reports
                 return IntToRoman(input, format.Equals("ROMAN"));
             return string.Format("{0:" + format + "}", input);
         }
-
+        /// <summary>
+        /// Funcion que convierte entero a romano
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="uppercase"></param>
+        /// <returns></returns>
         public static string IntToRoman(object input, bool uppercase)
         {
             if (input == null)

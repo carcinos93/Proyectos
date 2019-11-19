@@ -121,7 +121,7 @@ namespace ReportesCLIN2.Controllers
 
 
 
-            return File(Reporting.Export(reporte, param, formatoExport.formato), "application/octet-stream", reporte + "." + extension);
+            return File(Reporting.Export(reporte, param, formatoExport.formato), "application/octet-stream", string.Format("{0}_{1:yyyyMMdd_HHmmss}",reporte, DateTime.Now) + "." + extension);
 
         }
 
@@ -155,7 +155,14 @@ namespace ReportesCLIN2.Controllers
         [HttpGet()]
         public ActionResult ViewReport(string reporte)
         {
-             ViewBag.Reporte = reporte;
+            Dictionary<string, string> parametros = new Dictionary<string, string>();
+            foreach (string i in Request.QueryString.AllKeys)
+            {
+                parametros.Add(i, Request.QueryString.Get(i));
+            }
+
+            ViewBag.Reporte = reporte;
+
             var xml = XDocument.Load(Server.MapPath("~/Reports/" + reporte + ".data"));
             if (xml != null)
             {
@@ -167,11 +174,14 @@ namespace ReportesCLIN2.Controllers
                    var type = e.Attribute("type").Value ?? "textbox";
                    var name = e.Attribute("name").Value;
                    var label = e.Attribute("label").Value == null ? e.Attribute("name").Value.Replace('_', ' ') : e.Attribute("label").Value;
+                   var value = "";
+                   if (parametros.ContainsKey(name))
+                       value = parametros[name];
 
                    if (type == "textbox")
-                       controls.AddTextBox(new { label = label, name = name });
+                       controls.AddTextBox(new { label = label, name = name, value = value });
                    if (type == "date")
-                       controls.AddDate(new { label = label, name = name });
+                       controls.AddDate(new { label = label, name = name, value = value });
                });
 
                 ViewBag.Parametros = controls.Render();

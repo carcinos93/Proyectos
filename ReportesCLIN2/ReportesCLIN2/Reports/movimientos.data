@@ -1,15 +1,27 @@
 <Report template="template1.docx">
   <Properties>
+    <!--
+      Actualmente estas propiedades se usan en pdf y word 
+          <Property name="margin-left" value="16"></Property>
+         <Property name="margin-right" value="16"></Property>
+         <Property name="margin-bottom" value="15"></Property>
+         <Property name="margin-top" value="10"></Property>
+         
+     Las siguientes propiedades solo se utiliza en la generacion del pdf
+         <Property name="footer-font-size" value="7"></Property>
+         <Property name="page-size" value="Letter"></Property>
+         
+    -->
     <Property name="margin-left" value="16"></Property>
     <Property name="margin-right" value="16"></Property>
     <Property name="margin-bottom" value="15"></Property>
     <Property name="margin-top" value="10"></Property>
-    <Property name="page-size" value="Letter"></Property>
-    <!--<Property name="page-number" value="true" start="1" fmt="decimal "></Property>-->
     <Property name="footer-right" value="[page]"></Property>
     <Property name="footer-font-size" value="7"></Property>
+    <Property name="page-size" value="Letter"></Property>
+
   </Properties>
-	<DataSource>server=LAPTOP-0HM5B1NI\MSSQLSERVER2016;database=AKTUA;uid=sa;password=SqlServer2016;</DataSource>
+	<DataSource>server=10.0.0.13;database=pruebas;uid=sa;password=P@ssw0rd;</DataSource>
 	<Params>
     <Param name="CREDITO" type="textbox" label="Credito" dbtype="varchar"/>
 	</Params>

@@ -6,7 +6,6 @@ function resizeIframe(obj) {
 var getPartametros = (): string => {
     var obj = new Object();
     $('.param').each((i, e) => {
-
         var element = $(e) as JQuery;
         obj[element.attr("name")] = element.val();
     });
@@ -19,13 +18,14 @@ $(document).ready(() => {
     });
 
 
-
+    ///Evento click en boton de exportar
     $("#export").on('click', (e) => {
         let parametros = getPartametros();
         window.open(window['url_base_export'] + "?formato="+ $("#format").val() +"&parametros=" + parametros, "_blank");
 
     });
 
+    ///Evento click en boton de visualizar reporte
     $("#render").on('click', (e) => {
         let parametros = getPartametros();
         $("#renderReport").attr("src", window['url_base_render'] + "?parametros=" + parametros);
