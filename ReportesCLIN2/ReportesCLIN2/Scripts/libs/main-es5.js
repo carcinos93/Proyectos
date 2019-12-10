@@ -30,7 +30,18 @@ webpackEmptyAsyncContext.id = "./$$_lazy_route_resource lazy recursive";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\r\n<div style=\"text-align:center\">\r\n  <h1>\r\n    Welcome to {{ title }}!\r\n  </h1>\r\n  <img width=\"300\" alt=\"Angular Logo\" src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==\">\r\n</div>\r\n<h2>Here are some links to help you start: </h2>\r\n<ul  class=\"list-group\">\r\n  <li class=\"list-group-item\">\r\n    <h2><a target=\"_blank\" rel=\"noopener\" href=\"https://angular.io/tutorial\">Tour of Heroes</a></h2>\r\n  </li>\r\n  <li>\r\n    <h2><a target=\"_blank\" rel=\"noopener\" href=\"https://angular.io/cli\">CLI Documentation</a></h2>\r\n  </li>\r\n  <li>\r\n    <h2><a target=\"_blank\" rel=\"noopener\" href=\"https://blog.angular.io/\">Angular blog</a></h2>\r\n  </li>\r\n</ul>\r\n\r\n<router-outlet></router-outlet>\r\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\r\n<div style=\"text-align:center\">\r\n  <h1>\r\n    Welcome to {{ title }}!\r\n  </h1>\r\n  <img width=\"300\" alt=\"Angular Logo\" src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==\">\r\n</div>\r\n\r\n<app-report></app-report>\r\n<router-outlet></router-outlet>\r\n"
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/index.js!./src/app/report/report.component.html":
+/*!************************************************************************!*\
+  !*** ./node_modules/raw-loader!./src/app/report/report.component.html ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\r\n    <div class=\"row\" *ngFor=\"items in datos\">\r\n        <div class=\"col\" *ngFor=\"item in items\">\r\n            <div class=\"card\">\r\n                <div class=\"card-body\">\r\n                    {{ item }}\r\n                     <img width=\"50\" height=\"auto\" src=\"/src/assets/report icon.png\" />\r\n                </div>\r\n            </div>\r\n      \r\n        </div>\r\n    </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -123,13 +134,15 @@ var platform_browser_1 = __webpack_require__(/*! @angular/platform-browser */ ".
 var core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 var app_routing_module_1 = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
 var app_component_1 = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+var report_component_1 = __webpack_require__(/*! ./report/report.component */ "./src/app/report/report.component.ts");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
             declarations: [
-                app_component_1.AppComponent
+                app_component_1.AppComponent,
+                report_component_1.ReportComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,
@@ -142,6 +155,61 @@ var AppModule = /** @class */ (function () {
     return AppModule;
 }());
 exports.AppModule = AppModule;
+
+
+/***/ }),
+
+/***/ "./src/app/report/report.component.ts":
+/*!********************************************!*\
+  !*** ./src/app/report/report.component.ts ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var ReportComponent = /** @class */ (function () {
+    function ReportComponent() {
+        this.matrixList = function (data, n) {
+            var grid = [], i = 0, x = data.length, col, row = -1;
+            for (var i = 0; i < x; i++) {
+                col = i % n;
+                if (col === 0) {
+                    grid[++row] = [];
+                }
+                grid[row][col] = data[i];
+            }
+            return grid;
+        };
+    }
+    ReportComponent.prototype.ngOnInit = function () {
+        var data = [
+            { nombre: "reporte01", descripcion: "Lorem ipsum dolor sit amet, consectetur", tipo: "report 1" },
+            { nombre: "reporte02", descripcion: "or incididunt ut labore et dolore magna ", tipo: "report 2" },
+            { nombre: "reporte03", descripcion: "Duis aute irure dolor in reprehenderit ", tipo: "report 3" },
+            { nombre: "reporte04", descripcion: "e it is pleasure, but because those who do not know how to pursue ", tipo: "report 4" },
+            { nombre: "reporte05", descripcion: "se, except to obtain some advantage fr", tipo: "report 5" },
+        ];
+        var grid = this.matrixList(data, 4);
+        this.datos = grid;
+    };
+    ReportComponent = __decorate([
+        core_1.Component({
+            selector: 'app-report',
+            template: __webpack_require__(/*! raw-loader!./report.component.html */ "./node_modules/raw-loader/index.js!./src/app/report/report.component.html")
+        })
+    ], ReportComponent);
+    return ReportComponent;
+}());
+exports.ReportComponent = ReportComponent;
 
 
 /***/ }),
@@ -204,7 +272,7 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\nelso\source\repos\carcinos93\Proyectos\ReportesCLIN2\ReportesCLIN2\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\nrodas\Documents\Documentos\repos\Proyectos\ReportesCLIN2\ReportesCLIN2\src\main.ts */"./src/main.ts");
 
 
 /***/ })

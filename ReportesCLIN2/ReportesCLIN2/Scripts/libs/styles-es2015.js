@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = [[module.i, "/* You can add global styles to this file, and also import other style files */\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9zdHlsZXMubGVzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSw4RUFBOEUiLCJmaWxlIjoic3JjL3N0eWxlcy5sZXNzIn0= */", '', '']]
+module.exports = [[module.i, "/* You can add global styles to this file, and also import other style files */\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9zdHlsZXMubGVzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSw4RUFBOEUiLCJmaWxlIjoiLi4vc3JjL3N0eWxlcy5sZXNzIn0= */", '', '']]
 
 /***/ }),
 
@@ -557,7 +557,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\nelso\source\repos\carcinos93\Proyectos\ReportesCLIN2\ReportesCLIN2\src\styles.less */"./src/styles.less");
+module.exports = __webpack_require__(/*! C:\Users\nrodas\Documents\Documentos\repos\Proyectos\ReportesCLIN2\ReportesCLIN2\src\styles.less */"./src/styles.less");
 
 
 /***/ })
