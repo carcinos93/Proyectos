@@ -20,6 +20,9 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @section Scripts {
+        @Scripts.Render("~/bundles/angular")
+    }
     @RenderSection("scripts", required: false)
 </body>
 </html>

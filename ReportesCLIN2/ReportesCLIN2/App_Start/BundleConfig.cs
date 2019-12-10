@@ -26,6 +26,12 @@ namespace ReportesCLIN2
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-grid.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+                "~/Scripts/libs/runtime*",
+                "~/Scripts/libs/polyfills*",
+                "~/Scripts/libs/vendor*",
+                "~/Scripts/libs/main*"));
         }
     }
 }

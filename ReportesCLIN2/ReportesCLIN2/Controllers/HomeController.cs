@@ -22,7 +22,7 @@ namespace ReportesCLIN2.Controllers
     {
         public WindowsIdentity ImpersonationUser { get; set; }
 
-        public ICredentials NetworkCredentials { get { return new System.Net.NetworkCredential("nelso", "Nightmare1"); } }
+        public ICredentials NetworkCredentials { get { return new System.Net.NetworkCredential("nrodas", "Ma$ter_1993",@"CLIN"); } }
 
         public bool GetFormsCredentials(out Cookie authCookie, out string userName, out string password, out string authority)
         {
@@ -73,8 +73,8 @@ namespace ReportesCLIN2.Controllers
                 
             };
 
-            reportViewer.ServerReport.ReportPath = "/Reportes CLIN/" + reporte;
-            reportViewer.ServerReport.ReportServerUrl = new Uri("http://laptop-0hm5b1ni:10110/ReportServer/");
+            reportViewer.ServerReport.ReportPath = "/ACACU/" + reporte;
+            reportViewer.ServerReport.ReportServerUrl = new Uri("http://clinqas:10214/ReportServer/");
             reportViewer.ServerReport.ReportServerCredentials = new icustome(); ;
 
 
