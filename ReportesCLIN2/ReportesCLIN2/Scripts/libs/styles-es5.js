@@ -557,7 +557,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\nrodas\Documents\Documentos\repos\Proyectos\ReportesCLIN2\ReportesCLIN2\src\styles.less */"./src/styles.less");
+module.exports = __webpack_require__(/*! C:\Users\nelso\source\repos\carcinos93\Proyectos\ReportesCLIN2\ReportesCLIN2\src\styles.less */"./src/styles.less");
 
 
 /***/ })

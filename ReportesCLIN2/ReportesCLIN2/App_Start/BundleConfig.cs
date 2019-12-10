@@ -27,7 +27,7 @@ namespace ReportesCLIN2
                       "~/Content/bootstrap-grid.css",
                       "~/Content/site.css"));
 
-            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+            bundles.Add(new Bundle("~/bundles/angular").Include(
                 "~/Scripts/libs/runtime*",
                 "~/Scripts/libs/polyfills*",
                 "~/Scripts/libs/vendor*",
