@@ -30,7 +30,7 @@ webpackEmptyAsyncContext.id = "./$$_lazy_route_resource lazy recursive";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\r\n<div style=\"text-align:center\">\r\n  <h1>\r\n    Welcome to {{ title }}!\r\n  </h1>\r\n  <img width=\"300\" alt=\"Angular Logo\" src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==\">\r\n</div>\r\n\r\n<app-report></app-report>\r\n<router-outlet></router-outlet>\r\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\r\n<div style=\"text-align:center\">\r\n  <h4>\r\n    Welcome to {{ title }}!\r\n  </h4>\r\n\r\n</div>\r\n\r\n<app-report></app-report>\r\n<router-outlet></router-outlet>\r\n"
 
 /***/ }),
 
@@ -41,7 +41,7 @@ module.exports = "<!--The content below is only a placeholder and can be replace
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n    <div class=\"row\" *ngFor=\"items in datos\">\r\n        <div class=\"col\" *ngFor=\"item in items\">\r\n            <div class=\"card\">\r\n                <div class=\"card-body\">\r\n                    {{ item }}\r\n                     <img width=\"50\" height=\"auto\" src=\"/src/assets/report icon.png\" />\r\n                </div>\r\n            </div>\r\n      \r\n        </div>\r\n    </div>\r\n</div>\r\n"
+module.exports = "<div class=\"container\">\r\n    <div class=\"form-group\">\r\n       <div class=\"form-row\">\r\n           <div class=\"form-control\">\r\n           <input type=\"button\" value=\"Cargar reportes\" /> \r\n        </div>\r\n       </div>\r\n        \r\n    </div>\r\n    <div class=\"row\" *ngFor=\"let items of datos\">\r\n        <div class=\"col-3\" *ngFor=\"let item of items\">\r\n            <div class=\"card\"  (click)=\"cardOnClick($event, item)\" style=\"max-width:300px; cursor:pointer\">\r\n                <div class=\"card-body\">\r\n                    <div class=\"container\">\r\n                        <div class=\"row\">\r\n                            <div class=\"col-3\" style=\"text-align:center\">\r\n                                <img src=\"src/assets/report icon.png\" width=\"50px\" height=\"auto\" [alt]=\"item.descripcion\" />\r\n                            </div>\r\n                            <div class=\"col-9\">\r\n                                {{ item.nombre }}\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n           \r\n                </div>\r\n            </div>\r\n            <br/>\r\n        </div>\r\n    </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -191,14 +191,15 @@ let ReportComponent = class ReportComponent {
             }
             return grid;
         };
+        this.cardOnClick = function (event, data) {
+            let reporte = data.nombre;
+            window.open("/Home/ReportViewer?reporte=" + reporte, "_blank");
+        };
     }
     ngOnInit() {
         var data = [
-            { nombre: "reporte01", descripcion: "Lorem ipsum dolor sit amet, consectetur", tipo: "report 1" },
-            { nombre: "reporte02", descripcion: "or incididunt ut labore et dolore magna ", tipo: "report 2" },
-            { nombre: "reporte03", descripcion: "Duis aute irure dolor in reprehenderit ", tipo: "report 3" },
-            { nombre: "reporte04", descripcion: "e it is pleasure, but because those who do not know how to pursue ", tipo: "report 4" },
-            { nombre: "reporte05", descripcion: "se, except to obtain some advantage fr", tipo: "report 5" },
+            { nombre: "MATRIZ_RIESGO_CLIENTE", descripcion: "Matriz de riesgo cliente", tipo: "report" },
+            { nombre: "MATRIZ_RIESGO_PROVEEDOR", descripcion: "Matriz de riesgo proveedor", tipo: "report" }
         ];
         var grid = this.matrixList(data, 4);
         this.datos = grid;

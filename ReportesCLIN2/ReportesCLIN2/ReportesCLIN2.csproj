@@ -26,7 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -111,13 +111,23 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -190,6 +200,13 @@
     <Compile Include="App_Start\Extensions.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Connected Services\ReportingServices\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Reporting.cs" />
     <Compile Include="Global.asax.cs">
@@ -202,6 +219,12 @@
     <Compile Include="SqlServerTypes\Loader.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\ReportingServices\configuration91.svcinfo" />
+    <None Include="Connected Services\ReportingServices\configuration.svcinfo" />
+    <None Include="Connected Services\ReportingServices\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -266,6 +289,472 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="App_Code\GlyphIcon.cshtml" />
     <Content Include="angular.json" />
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ActiveState.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.CacheRefreshPlan.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.CacheRefreshPlanState.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.CancelJobResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.CatalogItem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ChangeSubscriptionOwnerResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.CreateCacheRefreshPlanResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.CreateCatalogItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.CreateDataDrivenSubscriptionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.CreateDataSourceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.CreateFolderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.CreateItemHistorySnapshotResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.CreateLinkedItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.CreateReportEditSessionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.CreateRoleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.CreateScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.CreateSubscriptionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.DataRetrievalPlan.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.DataSetDefinition.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.DataSource.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.DataSourceDefinition.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.DataSourcePrompt.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.DeleteCacheRefreshPlanResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.DeleteItemHistorySnapshotResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.DeleteItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.DeleteRoleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.DeleteScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.DeleteSubscriptionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.DisableDataSourceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.DisableSubscriptionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.EnableDataSourceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.EnableSubscriptionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.Event.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ExpirationDefinition.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.Extension.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ExtensionParameter.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ExtensionSettings.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.FindItemsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.FireEventResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.FlushCacheResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GenerateModelResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetCacheOptionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetCacheRefreshPlanPropertiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetDataDrivenSubscriptionPropertiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetDataSourceContentsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetExecutionOptionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetExtensionSettingsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetItemDataSourcePromptsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetItemDataSourcesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetItemDefinitionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetItemHistoryLimitResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetItemHistoryOptionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetItemLinkResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetItemParametersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetItemReferencesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetItemTypeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetModelItemPermissionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetModelItemPoliciesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetPermissionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetPoliciesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetPropertiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetReportServerConfigInfoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetRolePropertiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetSchedulePropertiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetSubscriptionPropertiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetSystemPermissionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetSystemPoliciesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetSystemPropertiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetUserModelResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.GetUserSettingsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.InheritModelItemParentSecurityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.InheritParentSecurityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.IsSSLRequiredResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ItemHistorySnapshot.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ItemParameter.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ItemReferenceData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.Job.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListCacheRefreshPlansResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListChildrenResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListDatabaseCredentialRetrievalOptionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListDependentItemsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListEventsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListExecutionSettingsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListExtensionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListExtensionTypesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListItemHistoryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListItemTypesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListJobActionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListJobsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListJobStatesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListJobTypesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListModelDrillthroughReportsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListModelItemChildrenResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListModelItemTypesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListModelPerspectivesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListMySubscriptionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListParameterStatesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListParameterTypesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListParentsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListRolesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListScheduledItemsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListSchedulesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListScheduleStatesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListSecurityScopesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListSubscriptionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListSubscriptionsUsingDataSourceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ListTasksResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.LogoffResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.LogonUserResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ModelCatalogItem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ModelDrillthroughReport.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ModelItem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.MoveItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ParameterValue.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ParameterValueOrFieldReference.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.PauseScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.Policy.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.PrepareQueryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.Property.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.RegenerateModelResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.RemoveAllModelItemPoliciesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ResumeScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.Role.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.Schedule.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ScheduleDefinitionOrReference.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ServerInfoHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetCacheOptionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetCacheRefreshPlanPropertiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetDataDrivenSubscriptionPropertiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetDataSourceContentsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetExecutionOptionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetItemDataSourcesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetItemDefinitionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetItemHistoryLimitResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetItemHistoryOptionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetItemLinkResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetItemParametersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetItemReferencesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetModelDrillthroughReportsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetModelItemPoliciesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetPoliciesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetPropertiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetRolePropertiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetSchedulePropertiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetSubscriptionPropertiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetSystemPoliciesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetSystemPropertiesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.SetUserSettingsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.Subscription.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.Task.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.TestConnectForDataSourceDefinitionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.TestConnectForItemDataSourceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.UpdateItemExecutionSnapshotResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.ValidateExtensionSettingsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ReportingServices\ReportesCLIN2.ReportingServices.Warning.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\ReportingServices\ReportService2010.wsdl" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
@@ -349,6 +838,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\ReportingServices\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

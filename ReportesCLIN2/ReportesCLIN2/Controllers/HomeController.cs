@@ -73,8 +73,8 @@ namespace ReportesCLIN2.Controllers
                 
             };
 
-            reportViewer.ServerReport.ReportPath = "/ACACU/" + reporte;
-            reportViewer.ServerReport.ReportServerUrl = new Uri("http://clinqas:10214/ReportServer/");
+            reportViewer.ServerReport.ReportPath = "/Reportes CLIN/" + reporte;
+            reportViewer.ServerReport.ReportServerUrl = new Uri("http://clinvp:10214/ReportServer/");
             reportViewer.ServerReport.ReportServerCredentials = new icustome(); ;
 
 

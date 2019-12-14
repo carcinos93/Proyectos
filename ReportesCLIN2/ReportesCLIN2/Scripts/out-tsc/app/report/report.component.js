@@ -18,14 +18,15 @@ let ReportComponent = class ReportComponent {
             }
             return grid;
         };
+        this.cardOnClick = function (event, data) {
+            let reporte = data.nombre;
+            window.open("/Home/ReportViewer?reporte=" + reporte, "_blank");
+        };
     }
     ngOnInit() {
         var data = [
-            { nombre: "reporte01", descripcion: "Lorem ipsum dolor sit amet, consectetur", tipo: "report 1" },
-            { nombre: "reporte02", descripcion: "or incididunt ut labore et dolore magna ", tipo: "report 2" },
-            { nombre: "reporte03", descripcion: "Duis aute irure dolor in reprehenderit ", tipo: "report 3" },
-            { nombre: "reporte04", descripcion: "e it is pleasure, but because those who do not know how to pursue ", tipo: "report 4" },
-            { nombre: "reporte05", descripcion: "se, except to obtain some advantage fr", tipo: "report 5" },
+            { nombre: "MATRIZ_RIESGO_CLIENTE", descripcion: "Matriz de riesgo cliente", tipo: "report" },
+            { nombre: "MATRIZ_RIESGO_PROVEEDOR", descripcion: "Matriz de riesgo proveedor", tipo: "report" }
         ];
         var grid = this.matrixList(data, 4);
         this.datos = grid;

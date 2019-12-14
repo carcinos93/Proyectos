@@ -24,7 +24,11 @@ namespace ReportesCLIN2
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
-
+            routes.MapRoute(
+               name: "api",
+               url: "api/{action}/{id}",
+               defaults: new { controller = "app", action = "Index", id = UrlParameter.Optional }
+           );
         }
     }
 }

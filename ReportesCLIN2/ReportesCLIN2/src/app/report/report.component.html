@@ -1,13 +1,30 @@
 <div class="container">
-    <div class="row" *ngFor="items in datos">
-        <div class="col" *ngFor="item in items">
-            <div class="card">
+    <div class="form-group">
+       <div class="form-row">
+           <div class="form-control">
+           <input type="button" value="Cargar reportes" /> 
+        </div>
+       </div>
+        
+    </div>
+    <div class="row" *ngFor="let items of datos">
+        <div class="col-3" *ngFor="let item of items">
+            <div class="card"  (click)="cardOnClick($event, item)" style="max-width:300px; cursor:pointer">
                 <div class="card-body">
-                    {{ item }}
-                     <img width="50" height="auto" src="/src/assets/report icon.png" />
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-3" style="text-align:center">
+                                <img src="src/assets/report icon.png" width="50px" height="auto" [alt]="item.descripcion" />
+                            </div>
+                            <div class="col-9">
+                                {{ item.nombre }}
+                            </div>
+                        </div>
+                    </div>
+           
                 </div>
             </div>
-      
+            <br/>
         </div>
     </div>
 </div>
